@@ -87,6 +87,9 @@ int main ( int argc, char *argv[] )
 	B = atoi(argv[2]);
 	P = atoi(argv[3]);
 	C = atoi(argv[4]);
+	struct timeval tv;
+	double t1;
+	double t2;
 
 	itemsConsumed = 0;
 	bufferCounter = 0;
@@ -97,6 +100,8 @@ int main ( int argc, char *argv[] )
 	sem_init(&bufferFilledCount, 0, 0); // initialize bufferFilled as being 0 (empty)
 	sem_init(&bufferAvailableCount, 0, B - 1); // initialize bufferAvailable as being max size of buffer (B)
 
+	gettimeofday(&tv, NULL);
+	t1 = tv.tv_sec + tv.tv_usec/1000000.0;
 	// create all producer threads
 	for (i = 0; i < P;i++) {
 		tmp = malloc(sizeof(int));
@@ -118,6 +123,11 @@ int main ( int argc, char *argv[] )
 	// }
 
 	while(itemsConsumed < N);
+
+	gettimeofday(&tv, NULL);
+	t2 = tv.tv_sec + tv.tv_usec/1000000.0;
+
+	printf("%.6lf seconds elapsed.\n", t2-t1);
 	
 	free(buffer);
   	return 0;
