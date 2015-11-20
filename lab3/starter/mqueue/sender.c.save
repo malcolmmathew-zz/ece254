@@ -25,8 +25,8 @@ int main(int argc, char *argv[])
 	char  quit = '\0';
 
 	/* queue name must start with '/'. man mq_overview */
-	char  qname[] = "/mailbox1_yqhuang";	
-	//char *qname = NULL;
+	//char  qname[] = "/mailbox1_yqhuang";	
+	char *qname = "/mailbox1_yqhuang";
 
 	mode_t mode = S_IRUSR | S_IWUSR;
 	struct mq_attr attr;
