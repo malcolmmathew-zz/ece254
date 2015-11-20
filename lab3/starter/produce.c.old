@@ -46,6 +46,7 @@ void *producer(void *arg) {
 		}
 	}
 	
+	free(arg);
 	pthread_exit(NULL);
 }
 
@@ -74,6 +75,7 @@ void *consumer(void *arg) {
 		}
 	}
 
+	free(arg);
 	pthread_exit(NULL);
 }
 
@@ -116,6 +118,6 @@ int main ( int argc, char *argv[] )
 	// }
 
 	while(itemsConsumed < N);
-
+	free(buffer);
   	return 0;
 }
