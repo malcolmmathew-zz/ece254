@@ -4,18 +4,21 @@
 #include <mqueue.h>
 #include <sys/stat.h>
 #include <time.h>
-#include "common.h"
 #include <signal.h>
 #include <stdbool.h>
 #include <math.h>
 
 int main (int argc, char *argv[]) {
-	int N, P, B, id;
+	int N, P, id;
+	double start_time, end_time;
 
 	N = atoi(argv[1]);
-	B = atoi(argv[2]);
+	start_time = atof(argv[2]);
 	P = atoi(argv[3]);
 	id = atoi(argv[4]);
+	
+	
+	struct timeval tv;
 
 
 //  	struct mq_attr output_queue_attr;
@@ -92,7 +95,12 @@ int main (int argc, char *argv[]) {
 	}
 
 	if (consumers == 0) {
-		printf("System execution time: %d", time_elapsed);
+
+		gettimeofday(&tv, NULL);
+		end_time = tv.tv_sec + tv.tv_usec/1000000.0;
+
+		double time_elapsed = end_time - start_time;
+		printf("System execution time: %f", time_elapsed);
 		if (mq_close(qdes) == -1) {
 			perror("mq_close() failed");
 			exit(2);
