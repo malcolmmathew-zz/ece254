@@ -23,13 +23,18 @@
    passed as the program's argument list.  Returns the process id of
    the spawned process.  */
 
-int spawn (char* program, char** arg_list, int id)
+int spawn (char* program, char** arg_list, int id, double t1)
 {
 	arg_list[0] = program;
 
 	char id_str[3];
 	sprintf(id_str, "%d", id);
+	
 
+	char start_time[17];
+	sprintf(start_time, "%f", t1);	
+
+	arg_list[2] = start_time;
 	arg_list[4] = id_str;
 
 	/* Duplicate this process.  */
@@ -57,6 +62,9 @@ int main ( int argc, char *argv[] )
 	
 	pid_t wpid;	
 	int status;
+
+	struct timeval tv;
+	double t1;
 
 	int N = atoi(argv[1]);
 	int B = atoi(argv[2]);
@@ -119,12 +127,15 @@ int main ( int argc, char *argv[] )
 
 	int i, j;
 
+	gettimeofday(&tv, NULL);
+	t1 = tv.tv_sec + tv.tv_usec/1000000.0;
+	
 	for(i = 0; i < P; i++) {
-		spawn("./produce", argv, i);
+		spawn("./produce", argv, i, 0.0);
 	}
 
 	for(j = 0; j < C; j++) {
-		spawn("./consume", argv, j);
+		spawn("./consume", argv, j, t1);
 	}
 
 

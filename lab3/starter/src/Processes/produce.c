@@ -4,7 +4,6 @@
 #include <mqueue.h>
 #include <sys/stat.h>
 #include <time.h>
-#include "common.h"
 #include <signal.h>
 #include <stdbool.h>
 
