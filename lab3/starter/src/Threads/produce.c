@@ -117,17 +117,12 @@ int main ( int argc, char *argv[] )
 		pthread_create(&threads[P + i], NULL, &consumer, tmp);
 	}
 
-	/** For some reason the below code causes threads to hang waiting for one another **/
-	// for(i = 0; i < P + C; i++) {
-	// 	pthread_join(&threads[i], NULL);
-	// }
-
 	while(itemsConsumed < N);
 
 	gettimeofday(&tv, NULL);
 	t2 = tv.tv_sec + tv.tv_usec/1000000.0;
 
-	printf("%.6lf seconds elapsed.\n", t2-t1);
+	printf("System execution time: %f seconds", t2-t1);
 	
 	free(buffer);
   	return 0;
